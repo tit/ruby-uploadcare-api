@@ -2,16 +2,7 @@ require 'spec_helper'
 
 describe Uploadcare::Uploader do
   before :each do
-    @uploader = Uploadcare::Uploader.new(
-      public_key: $UPLOADCARE_PUBLIC_KEY,
-      upload_url_base: $UPLOADCARE_UPLOAD_URL_BASE
-    )
-  end
-
-  it "should require public_key" do
-    expect {
-      Uploadcare::Uploader.new
-    }.to raise_error(ArgumentError)
+    @uploader = Uploadcare::Uploader.new(CONFIG)
   end
 
   it "should upload file with valid public key" do
@@ -25,10 +16,7 @@ describe Uploadcare::Uploader do
 
   it 'should require valid public key for file upload' do
     expect {
-      uploader = Uploadcare::Uploader.new(
-        public_key: 'invalid',
-        upload_url_base: $UPLOADCARE_UPLOAD_URL_BASE
-      )
+      uploader = Uploadcare::Uploader.new CONFIG.merge({public_key: 'invalid'})
       uploader.upload_file File.join(File.dirname(__FILE__), 'view.png')
     }.to raise_error(ArgumentError)
   end

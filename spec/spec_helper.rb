@@ -5,8 +5,10 @@ require 'rubygems'
 require 'pry'
 require 'rspec'
 require 'uploadcare'
+require 'yaml'
 
-$UPLOADCARE_PUBLIC_KEY = ENV['UPLOADCARE_PUBLIC_KEY']
-$UPLOADCARE_PRIVATE_KEY = ENV['UPLOADCARE_PRIVATE_KEY']
-$UPLOADCARE_UPLOAD_URL_BASE = ENV['UPLOADCARE_UPLOAD_URL_BASE'] || 'https://upload.uploadcare.com'
-$UPLOADCARE_API_URL_BASE = ENV['UPLOADCARE_API_URL_BASE'] || 'https://api.uploadcare.com'
+CONFIG = {}
+config_file = File.join(File.dirname(__FILE__), 'config.yml')
+if File.exists?(config_file)
+  CONFIG.update Hash[YAML.parse_file(config_file).to_ruby.map{|a, b| [a.to_sym, b]}]
+end

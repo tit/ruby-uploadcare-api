@@ -1,6 +1,4 @@
-# Uploadcare::Api
-
-TODO: Write a gem description
+A ruby wrapper for uploadcare.com service.
 
 ## Installation
 
@@ -18,12 +16,12 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
 
-## Contributing
+## Testing
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Make `spec/config.yml` like this:
+    
+    public_key: 'PUBLIC KEY'
+    private_key: 'PRIVATE KEY'
+
+And run `bundle exec rspec`
