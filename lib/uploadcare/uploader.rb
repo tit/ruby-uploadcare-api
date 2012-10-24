@@ -21,13 +21,12 @@ module Uploadcare
     end
 
     def upload_file(path)
-      file_id = File.generate_file_id
-      response :post, '/iframe/', {
+      resp = response :post, '/base/', {
         UPLOADCARE_PUB_KEY: @options[:public_key],
-        UPLOADCARE_FILE_ID: file_id,
+        # UPLOADCARE_FILE_ID: file_id,
         file: Faraday::UploadIO.new(path, MIME::Types.of(path))
       }
-      file_id
+      resp['file']
     end
   protected
     def response method, path, params = {}
@@ -38,7 +37,7 @@ module Uploadcare
       end
       r = connection.send(method, path, params)
       raise ArgumentError.new(r.body) if r.status != 200
-      r.body
+      JSON.parse(r.body)
     end
   end
 end
