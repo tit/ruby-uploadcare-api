@@ -36,5 +36,6 @@ describe Uploadcare::Api::File do
     @file.store
     @file.public_url('crop/200x200', 'resize/200x200').should ==
       "#{CONFIG[:static_url_base]}/#{@file.file_id}/-/crop/200x200/-/resize/200x200/"
+    @file.public_url.should == "#{CONFIG[:static_url_base]}/#{@file.file_id}/"
   end
 end
