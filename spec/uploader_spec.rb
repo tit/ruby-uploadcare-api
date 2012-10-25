@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Uploadcare::Uploader do
   before :each do
+    @api = Uploadcare::Api.new(CONFIG)
     @uploader = Uploadcare::Uploader.new(CONFIG)
   end
 
@@ -12,6 +13,11 @@ describe Uploadcare::Uploader do
     }.to_not raise_error(ArgumentError)
 
     file_id.size.should > 0
+  end
+
+  it 'should upload file from url' do
+    file = @api.file(@uploader.upload_url('http://facebook.com'))
+    file.should be_an_instance_of Uploadcare::Api::File
   end
 
   it 'should require valid public key for file upload' do

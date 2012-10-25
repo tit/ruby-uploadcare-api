@@ -7,7 +7,10 @@ module Uploadcare
     end
 
     def upload_url url
-
+      token = response :post, '/from_url/', { source_url: url, pub_key: @options[:public_key] }
+      sleep 0.5 while (r = response(:post, '/from_url/status/', token))['status'] == 'unknown'
+      raise ArgumentError.new(r['error']) if r['status'] == 'error'
+      r['file_id']
     end
 
     def upload_file(path)
