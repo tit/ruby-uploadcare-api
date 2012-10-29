@@ -51,9 +51,9 @@ module Uploadcare
       end
       r = connection.send(method, path, params)
       if r.status < 300
-        JSON.parse(r.body) if r.body.present?
+        JSON.parse(r.body) unless r.body.nil? or r.body == ""
       else
-        msg = r.body.present? ? JSON.parse(r.body)["detail"] : r.status
+        msg = (r.body.nil? or r.body == "") ? r.status : JSON.parse(r.body)["detail"]
         raise ArgumentError.new(msg)
       end
     end
