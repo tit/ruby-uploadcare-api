@@ -1,3 +1,5 @@
+![Travis status](https://secure.travis-ci.org/uploadcare/ruby-uploadcare-api.png)
+
 A ruby wrapper for uploadcare.com service.
 
 ## Installation
