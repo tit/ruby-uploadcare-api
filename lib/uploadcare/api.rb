@@ -50,10 +50,12 @@ module Uploadcare
         faraday.headers['User-Agent'] = Uploadcare::user_agent
       end
       r = connection.send(method, path, params)
-      raise ArgumentError.new(JSON.parse(r.body)["detail"]) unless [200, 204].include?(r.status)
-      JSON.parse(r.body) unless r.body.nil?
+      if r.status < 300
+        JSON.parse(r.body) if r.body.present?
+      else
+        msg = r.body.present? ? JSON.parse(r.body)["detail"] : r.status
+        raise ArgumentError.new(msg)
+      end
     end
   end
 end
-
-
